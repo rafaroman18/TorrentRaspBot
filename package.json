@@ -1,0 +1,23 @@
+{
+  "name": "torrentraspbot",
+  "version": "1.0.0",
+  "description": "Telegram Bot capable of managing torrent files and uploading to Google Drive",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaroman18/TorrentRaspBot.git"
+  },
+  "author": "Rafael Roman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafaroman18/TorrentRaspBot/issues"
+  },
+  "homepage": "https://github.com/rafaroman18/TorrentRaspBot#readme",
+  "dependencies": {
+    "shelljs": "^0.8.3",
+    "telegraf": "^3.32.0"
+  }
+}
