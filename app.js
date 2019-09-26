@@ -10,11 +10,9 @@ const test = require('./test')
 const bot = new Telegraf(process.env.TOKEN)
 
 bot.use(async (ctx,next)=>{
-    if( ctx.chat.id == process.env.CHATID ){
-      ctx.logged = true
-      await next(ctx)
-    }
-})
+  ctx.chat.id == process.env.CHATID && await next(ctx)})
+  
+
 bot.use(commandArgs) //Divide the message chat into raw/command/args
 
 bot.start((ctx) => ctx.reply('Welcome to TorrentRaspBot! \nWrite /help to see the available commands!') )
