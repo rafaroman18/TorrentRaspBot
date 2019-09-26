@@ -2,11 +2,11 @@ var shell = require('shelljs')
 const torrent = require('./torrent')
 
 const download = (ctx) => {
-    ctx.reply('Downloading...')
     if (ctx.command.args.length != 1) {
         ctx.reply('ERROR in arguments. Please introduce 1 and only 1 link')
     }
     else {
+        ctx.reply('Downloading...')
         shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0])
         while(shell.exec('ps -ef | grep wget | grep -v grep')!=''){}
         ctx.reply('Downloaded.')

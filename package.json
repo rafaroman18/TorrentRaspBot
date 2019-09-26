@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rafaroman18/TorrentRaspBot#readme",
   "dependencies": {
+    "dotenv": "^8.1.0",
     "shelljs": "^0.8.3",
     "telegraf": "^3.32.0"
   }
