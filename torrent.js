@@ -1,5 +1,4 @@
 var shell = require('shelljs')
-const drive = require('./drive')
 
 const torrent = (ctx) => {
     ctx.reply('Starting Download...')
