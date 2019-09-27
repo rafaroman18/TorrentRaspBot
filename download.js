@@ -1,8 +1,7 @@
 var shell = require('shelljs')
 const torrent = require('./torrent')
-const http = require('http')
+const https = require('https')
 const fs = require('fs');
-
 
 
 const download = (ctx) => {
@@ -11,17 +10,15 @@ const download = (ctx) => {
     }
     else {
         ctx.reply('Downloading...')
-
         var download = function(url, dest, cb) {
             var file = fs.createWriteStream(dest)
-            var request = http.get(ctx.command.args[0], function(response) {
+            var request = https.get(ctx.command.args[0], function(response) {
                 response.pipe(file)
                 file.on('finish', function() {
                     file.close(cb)
                 })
             })
         } 
-
         /*
         shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0],{ async: true },(code,stdout,stderr)=>{
             ctx.reply('Downloaded.')
