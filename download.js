@@ -1,6 +1,9 @@
 var shell = require('shelljs')
 const torrent = require('./torrent')
-const https = require('https')
+const https = require('http')
+const fs = require('fs');
+
+
 
 const download = (ctx) => {
     if (ctx.command.args.length != 1) {
@@ -8,7 +11,7 @@ const download = (ctx) => {
     }
     else {
         ctx.reply('Downloading...')
-        https.get(ctx.command.args[0],(res)=>{
+        http.get(ctx.command.args[0],(res)=>{
             ctx.reply('Downloaded!')    
         })
 
