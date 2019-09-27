@@ -1,6 +1,6 @@
 var shell = require('shelljs')
 const torrent = require('./torrent')
-const https = require('http')
+const http = require('http')
 const fs = require('fs');
 
 
