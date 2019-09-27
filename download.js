@@ -17,6 +17,7 @@ const download = (ctx) => {
                 file.on('finish', function() {
                     file.close(cb)
                 })
+                ctx.reply('Downloaded.')
             })
         } 
         /*
