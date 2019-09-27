@@ -12,31 +12,15 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
 
-        var request = http.get(ctx.command.args[0]).on('response', function(res) { 
-            console.log('in cb');           
-            var len = parseInt(response.headers['content-length'], 10);
-            var downloaded = 0;
-            
-            res.on('data', function(chunk) {
-                file.write(chunk);
-                downloaded += chunk.length;
-                process.stdout.write("Downloading " + (100.0 * downloaded / len).toFixed(2) + "% " + downloaded + " bytes" + isWin ? "\033[0G": "\r");
-                // reset timeout
-                clearTimeout( timeoutId );
-                timeoutId = setTimeout( fn, timeout );
-            }).on('end', function () {
-                // clear timeout
-                clearTimeout( timeoutId );
-                file.end();
-                console.log(file_name + ' downloaded to: ' + apiPath);
-                callback(null);
-            }).on('error', function (err) {
-                // clear timeout
-                clearTimeout( timeoutId );                
-                callback(err.message);
-            });           
-        });
-
+        var download = function(url, dest, cb) {
+            var file = fs.createWriteStream(dest)
+            var request = http.get(ctx.command.args[0], function(response) {
+                response.pipe(file)
+                file.on('finish', function() {
+                    file.close(cb)
+                })
+            })
+        } 
 
         /*
         shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0],{ async: true },(code,stdout,stderr)=>{
