@@ -1,5 +1,6 @@
 var shell = require('shelljs')
 const torrent = require('./torrent')
+const https = require('https')
 
 const download = (ctx) => {
     if (ctx.command.args.length != 1) {
@@ -7,6 +8,14 @@ const download = (ctx) => {
     }
     else {
         ctx.reply('Downloading...')
+        https.get(ctx.command.args[0],(res)=>{
+            ctx.reply('Downloaded!')    
+        })
+
+
+
+
+        /*
         shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0],{ async: true },(code,stdout,stderr)=>{
             ctx.reply('Downloaded.')
             if (shell.exec('file -b ~/Super_Secret_File') == 'BitTorrent file') {
@@ -17,7 +26,7 @@ const download = (ctx) => {
                 ctx.reply('Uploading the file to Google Drive...')
                 shell.exec('mv ~/Super_Secret_File /mnt/gdrive/TRBDownloads')
             }
-        })
+        })*/
     }
 }
 
