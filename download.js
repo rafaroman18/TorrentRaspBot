@@ -23,7 +23,7 @@ const download = (ctx) => {
                 body += data;
             })
 
-            res.on('end',() => console.log(body);)
+            res.on('end',() => console.log(body));
 
         })
 
