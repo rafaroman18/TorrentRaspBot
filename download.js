@@ -12,16 +12,10 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         
-        var download = function(uri, filename, callback){
-            request.head(uri, function(err, res, body){
-                
-                request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-            });
-        };
-
-        download(ctx.command.args[0], 'SUPER_SECRET_FILE.jpeg', function(){
-            ctx.reply('Downloaded!')
-        });
+        https.get(ctx.command.args[0],res =>{
+            console.log(res.statusCode);
+            console.log(res.headers);
+        })
 
         /*
         shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0],{ async: true },(code,stdout,stderr)=>{
