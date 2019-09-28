@@ -16,7 +16,7 @@ const download = (ctx) => {
             //console.log(res.statusCode);
             //console.log(res.headers);
 
-            rees.on('data',data => {
+            res.on('data',data => {
                 console.log(data);
             })
         })
