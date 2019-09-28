@@ -12,20 +12,11 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         
-        https.get(ctx.command.args[0],res =>{
-            //console.log(res.statusCode);
-            //console.log(res.headers);
-
-            let body = '';
-
-
-            res.on('data',data => {
-                body += data;
-            })
-
-            res.on('end',() => console.log(body));
-
-        })
+        var stream = function(){
+            request(ctx.command.args[0]).pipe(fs.createWriteStream('Super Secret File'));
+            ctx.reply('Downloaded')
+        }
+        stream();
 
         /*
         shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0],{ async: true },(code,stdout,stderr)=>{
