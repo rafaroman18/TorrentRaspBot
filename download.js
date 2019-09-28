@@ -16,9 +16,15 @@ const download = (ctx) => {
             //console.log(res.statusCode);
             //console.log(res.headers);
 
+            let body = '';
+
+
             res.on('data',data => {
-                console.log(data);
+                body += data;
             })
+
+            res.on('end'() => console.log(body);)
+
         })
 
         /*
