@@ -13,8 +13,12 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         
         https.get(ctx.command.args[0],res =>{
-            console.log(res.statusCode);
-            console.log(res.headers);
+            //console.log(res.statusCode);
+            //console.log(res.headers);
+
+            rees.on('data',data => {
+                console.log(data);
+            })
         })
 
         /*
