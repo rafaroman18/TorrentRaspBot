@@ -12,24 +12,21 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         
-        var stream = function(){
-            request(ctx.command.args[0]).pipe(fs.createWriteStream('Super Secret File'));
-            ctx.reply('Downloaded')
-        }
-        stream();
+        var download = function(uri, filename, callback){
+            request.head(uri, function(err, res, body){
+                request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+            });
+        };
 
-        /*
-        shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0],{ async: true },(code,stdout,stderr)=>{
-            ctx.reply('Downloaded.')
-            if (shell.exec('file -b ~/Super_Secret_File') == 'BitTorrent file') {
-                ctx.reply('Detected BitTorrent File. Starting Transmission.')
-                torrent
-            }
-            else{
-                ctx.reply('Uploading the file to Google Drive...')
-                shell.exec('mv ~/Super_Secret_File /mnt/gdrive/TRBDownloads')
-            }
-        })*/
+        download(ctx.command.args[0], 'SUPER_SECRET_FILE', function(){
+            ctx.reply('Downloaded!')
+        });
+        
+        https.get(ctx.command.args[0],res =>{
+            console.log(res.statusCode);
+            console.log(res.headers);
+        })
+
     }
 }
 
