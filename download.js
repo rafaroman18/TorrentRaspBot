@@ -2,6 +2,7 @@ var shell = require('shelljs')
 const torrent = require('./torrent')
 const https = require('https')
 const fs = require('fs');
+const request = require('request')
 
 
 const download = (ctx) => {
@@ -10,16 +11,20 @@ const download = (ctx) => {
     }
     else {
         ctx.reply('Downloading...')
-        var download = function(url, dest, cb) {
-            var file = fs.createWriteStream(dest)
-            var request = https.get(ctx.command.args[0], function(response) {
-                response.pipe(file)
-                file.on('finish', function() {
-                    file.close(cb)
-                })
-                ctx.reply('Downloaded.')
-            })
-        } 
+        
+        var download = function(uri, filename, callback){
+            request.head(uri, function(err, res, body){
+                console.log('content-type:', res.headers['content-type']);
+                console.log('content-length:', res.headers['content-length']);
+
+                request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+            });
+        };
+
+        download(ctx.command.args[0], 'SUPER_SECRET_FILE.jpeg', function(){
+            ctx.reply('Downloaded!')
+        });
+
         /*
         shell.exec('sudo bash script_Download.sh ' + ctx.command.args[0],{ async: true },(code,stdout,stderr)=>{
             ctx.reply('Downloaded.')
