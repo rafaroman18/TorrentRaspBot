@@ -20,11 +20,11 @@ async function DWNLD(){
 
     return new Promise((resolve,reject) => {
 
-        resolve.data.on('end',()=>{
+        response.data.on('end',()=>{
             resolve()
         })
 
-        resolve.data.on('error',err  =>{
+        response.data.on('error',err  =>{
             reject(err)
         })
 
