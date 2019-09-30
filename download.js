@@ -31,7 +31,6 @@ const download = (ctx) => {
     }
     else {
         ctx.reply('Downloading...')
-        ctx.reply(ctx.command.args[0])
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
         })
