@@ -2,7 +2,7 @@ const torrent = require('./torrent')
 const Fs = require('fs');
 const Path = require('path');
 const Axios = require('axios');
-
+const shell = require('shelljs')
 
 async function DWNLD(url){ // Function to make a GET on any url
 
@@ -33,7 +33,9 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
-
+            shell.exec('file -b /home/pi/TRB/tempDownload/*' == 'BitTorrent File'){
+                ctx.reply('Detected Torrent File')
+            }
         })
     }
 }
