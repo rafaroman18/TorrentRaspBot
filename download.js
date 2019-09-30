@@ -21,6 +21,7 @@ async function DWNLD(url){ // Function to make a GET on any url
 
             response.data.on('end',()=>{
                 resolve()
+                
             })
         })
     })
@@ -35,9 +36,17 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
-            /*if(shell.exec('sudo file -b /home/pi/TRB/tempDownload/*') == 'BitTorrent File'){
-                ctx.reply('Detected Torrent File')
-            }*/
+            
+        /*function fileValidation(){
+            var fileInput = document.getElementById('file');
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.torrent)$/i;
+            if(!allowedExtensions.exec(filePath)){
+                alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+                fileInput.value = '';
+                return false;
+    }}*/
+
         })
     }
 }
