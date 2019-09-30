@@ -1,5 +1,3 @@
-'use strict'
-
 const torrent = require('./torrent')
 const Fs = require('fs');
 const Path = require('path');
@@ -25,9 +23,6 @@ async function DWNLD(){
             })
         })
     })
-
-    
-
 }
 
 
