@@ -9,7 +9,7 @@ async function DWNLD(url){
 
     const path = Path.resolve(__dirname,'files','test.jpg')
 
-    const response = Axio({
+    const response = Axios({
         method: 'GET',
         url: url,
         responseType:'stream'
