@@ -15,22 +15,24 @@ async function DWNLD(){
         method: 'GET',
         url: url,
         responseType:'stream'
+    }).then(function(response){
+        response.data.pipe(Fs.createWriteStream(path))
+
+        return new Promise((resolve,reject) => {
+
+            response.data.on('end',()=>{
+                resolve()
+            })
+
+            response.data.on('error',err  =>{
+                reject(err)
+            })
+
+
+        }).catch()
     })
 
-    response.data.pipe(Fs.createWriteStream(path))
-
-    return new Promise((resolve,reject) => {
-
-        response.data.on('end',()=>{
-            resolve()
-        })
-
-        response.data.on('error',err  =>{
-            reject(err)
-        })
-
-
-    }).catch()
+    
 
 }
 
