@@ -1,12 +1,11 @@
 const Telegraf = require('telegraf')
 const commandArgs = require('./arguments')
 const download = require('./download')
-
-var shell = require('shelljs')
+require('dotenv').config()
 
 const bot = new Telegraf(process.env.TOKEN)
 
-bot.use(async (ctx,next)=>{
+bot.use(async (ctx,next)=>{ //This line allows the BOT to ONLY work for me (based on my chat_id)
   ctx.chat.id == process.env.CHATID && await next(ctx)})
   
 
