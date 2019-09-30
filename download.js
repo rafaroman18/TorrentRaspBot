@@ -23,13 +23,7 @@ async function DWNLD(){
             response.data.on('end',()=>{
                 resolve()
             })
-
-            response.data.on('error',err  =>{
-                reject(err)
-            })
-
-
-        }).catch()
+        })
     })
 
     
