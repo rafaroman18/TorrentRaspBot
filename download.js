@@ -4,10 +4,9 @@ const Path = require('path');
 const Axios = require('axios');
 
 
-async function DWNLD(){
+async function DWNLD(url){
 
-    const path = Path.resolve(__dirname,'/home/pi/TRB','test.jpg')
-    const url = 'https://unsplash.com/photos/sK81mV5czwM/download?force=true'
+    const path = Path.resolve(__dirname,'/home/pi/TRB','test')
 
     const response = Axios({
         method: 'GET',
@@ -33,7 +32,7 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         ctx.reply(ctx.command.args[0])
-        DWNLD().then(() => {
+        DWNLD(ctx.command.args[0]).then(() => {
             ctx.reply('Downloaded!')
         })
     }
