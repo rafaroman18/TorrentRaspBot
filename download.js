@@ -4,9 +4,11 @@ const Path = require('path');
 const Axios = require('axios');
 const shell = require('shelljs')
 
+
+
 async function DWNLD(url){ // Function to make a GET on any url
 
-    const path = Path.resolve(__dirname,'/home/pi/TRB/tempDownload') // PATH
+    const path = Path.resolve(__dirname,'/home/pi/TRB/tempDownload','file'   INTRODUCE A WAY TO INCREMENT FILE NAME     ) // PATH
 
     const response = Axios({
         method: 'GET',
