@@ -6,7 +6,7 @@ const Axios = require('axios');
 
 async function DWNLD(url){ // Function to make a GET on any url
 
-    const path = Path.resolve(__dirname,'/home/pi/TRB','test') // PATH
+    const path = Path.resolve(__dirname,'/home/pi/TRB/tempDownload','test') // PATH
 
     const response = Axios({
         method: 'GET',
@@ -33,6 +33,7 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
+
         })
     }
 }
