@@ -42,9 +42,9 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         ctx.reply(ctx.command.args[0])
-        DWNLD().then()=>{
+        DWNLD().then(() => {
             ctx.reply('Downloaded!')
-        }
+        })
     }
 }
 
