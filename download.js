@@ -7,7 +7,7 @@ const Path = require('path');
 
 async function DWNLD(url){
 
-    const path = Path.resolve(__dirname,'files','test.jpg')
+    const path = Path.resolve(__dirname,'/home/pi/TRB','test.jpg')
 
     const response = Axios({
         method: 'GET',
