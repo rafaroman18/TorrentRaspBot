@@ -33,7 +33,7 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
-            shell.exec('file -b /home/pi/TRB/tempDownload/*' == 'BitTorrent File'){
+            if(shell.exec('file -b /home/pi/TRB/tempDownload/*') == 'BitTorrent File'){
                 ctx.reply('Detected Torrent File')
             }
         })
