@@ -4,9 +4,9 @@ const Path = require('path');
 const Axios = require('axios');
 
 
-async function DWNLD(url){
+async function DWNLD(url){ // Function to make a GET on any url
 
-    const path = Path.resolve(__dirname,'/home/pi/TRB','test')
+    const path = Path.resolve(__dirname,'/home/pi/TRB','test') // PATH
 
     const response = Axios({
         method: 'GET',
@@ -15,7 +15,7 @@ async function DWNLD(url){
     }).then(function(response){
         response.data.pipe(Fs.createWriteStream(path))
 
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve,reject) => { //Promise (async object)
 
             response.data.on('end',()=>{
                 resolve()
@@ -32,8 +32,8 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         ctx.reply(ctx.command.args[0])
-        DWNLD(ctx.command.args[0]).then(() => {
-            ctx.reply('Downloaded!')
+        DWNLD(ctx.command.args[0]).then(() => { //We call the function
+            ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
         })
     }
 }
