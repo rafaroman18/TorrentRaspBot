@@ -1,8 +1,9 @@
-var shell = require('shelljs')
+'use strict'
+
 const torrent = require('./torrent')
 const Fs = require('fs');
-const Axios = require('axios');
 const Path = require('path');
+const Axios = require('axios');
 
 
 async function DWNLD(){
@@ -29,10 +30,9 @@ async function DWNLD(){
         })
 
 
-    })
+    }).catch()
 
 }
-
 
 
 const download = (ctx) => {
@@ -42,8 +42,9 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         ctx.reply(ctx.command.args[0])
-        DWNLD()
-        ctx.reply('Downloaded!')
+        DWNLD().then()=>{
+            ctx.reply('Downloaded!')
+        }
     }
 }
 
