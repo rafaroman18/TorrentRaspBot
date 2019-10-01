@@ -36,7 +36,8 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
-            if(shell.exec('file -b /home/pi/TRB/package-lock.json') == "JSON data")
+            const { stdout, stderr, code } = sh.exec('file -b /home/pi/TRB/package-lock.json', { silent: true })
+            if(stdout == "JSON data")
             {
                 ctx.reply('HEY its JSON')
             }
@@ -50,4 +51,4 @@ const download = (ctx) => {
     }
 }
 
-module.exports = download 
+module.exports = download
