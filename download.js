@@ -41,8 +41,7 @@ const download = (ctx) => {
                     stdout.replace(/\t/g, '')
                     stdout.replace(/\r/g, '')
                     if (stdout == ("BitTorrent file" + '\n')) {
-                        ctx.reply("Torrent File detected.")
-                        ctx.reply("Starting Transmission")
+                        ctx.reply("Torrent File detected.Starting Transmission")
                     }
             })
         })
