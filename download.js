@@ -35,8 +35,8 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
-            ctx.reply('Downloaded!').then(() => { //If it is successful, reply 'Downloaded!'
-            
+            await ctx.reply('Downloaded!').then(() => { //If it is successful, reply 'Downloaded!'
+
                 const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
                     stdout.replace(/\n/g, '')
                     stdout.replace(/\t/g, '')
