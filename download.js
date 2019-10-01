@@ -40,7 +40,7 @@ const download = (ctx) => {
             stdout.replace(/\n/g, '')
             stdout.replace(/\t/g, '')
             stdout.replace(/\r/g, '')
-            if(stdout == "JSON data"){
+            if(stdout == ("JSON data" + '\n')){
                 ctx.reply("Hey, ITS JSON")
             }
 
