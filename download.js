@@ -6,22 +6,22 @@ const shell = require('shelljs')
 
 
 
-async function DWNLD(url){ // Function to make a GET on any url
+async function DWNLD(url) { // Function to make a GET on any url
 
-    const path = Path.resolve(__dirname,'/home/pi/TRB/tempDownload','file')   //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  //PATH
+    const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', 'file')   //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  //PATH
 
     const response = Axios({
         method: 'GET',
         url: url,
-        responseType:'stream'
-    }).then(function(response){
+        responseType: 'stream'
+    }).then(function (response) {
         response.data.pipe(Fs.createWriteStream(path))
 
-        return new Promise((resolve,reject) => { //Promise (async object)
+        return new Promise((resolve, reject) => { //Promise (async object)
 
-            response.data.on('end',()=>{
+            response.data.on('end', () => {
                 resolve()
-                
+
             })
         })
     })
@@ -35,16 +35,17 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
-            ctx.reply('Downloaded!').then(()=>{ //If it is successful, reply 'Downloaded!'
-                const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, {async:true})
-                stdout.replace(/\n/g, '')
-                stdout.replace(/\t/g, '')
-                stdout.replace(/\r/g, '')
-                if(stdout == ("BitTorrent file" + '\n')){
-                    ctx.reply("Torrent File detected.")
-                    ctx.reply("Starting Transmission")
-                }
-            })            
+            ctx.reply('Downloaded!').then(() => { //If it is successful, reply 'Downloaded!'
+                const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true }).then(() => {
+                    stdout.replace(/\n/g, '')
+                    stdout.replace(/\t/g, '')
+                    stdout.replace(/\r/g, '')
+                    if (stdout == ("BitTorrent file" + '\n')) {
+                        ctx.reply("Torrent File detected.")
+                        ctx.reply("Starting Transmission")
+                    }
+                })
+            })
         })
     }
 }
