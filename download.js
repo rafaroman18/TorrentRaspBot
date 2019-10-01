@@ -38,6 +38,8 @@ const download = (ctx) => {
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
             const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/package-lock.json', { silent: true }, {async:true})
             stdout.replace(/\n/g, '')
+            stdout.replace(/\t/g, '')
+            stdout.replace(/\r/g, '')
             console.log(stdout)
 
         /*function fileValidation(filePah){
