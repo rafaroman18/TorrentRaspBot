@@ -40,7 +40,9 @@ const download = (ctx) => {
             stdout.replace(/\n/g, '')
             stdout.replace(/\t/g, '')
             stdout.replace(/\r/g, '')
-            console.log(stdout)
+            if(stdout == "JSON data"){
+                ctx.reply("Hey, ITS JSON")
+            }
 
         /*function fileValidation(filePah){
             var allowedExtensions = /(\.torrent)$/i;
