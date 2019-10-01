@@ -8,7 +8,7 @@ const shell = require('shelljs')
 
 async function DWNLD(url){ // Function to make a GET on any url
 
-    const path = Path.resolve(__dirname,'/home/pi/TRB/tempDownload','file'   INTRODUCE A WAY TO INCREMENT FILE NAME     ) // PATH
+    const path = Path.resolve(__dirname,'/home/pi/TRB/tempDownload','file')   //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  //PATH
 
     const response = Axios({
         method: 'GET',
@@ -36,19 +36,18 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
-            
-        /*function fileValidation(){
-            var fileInput = document.getElementById('file');
-            var filePath = fileInput.value;
+            if(shell.exec('file -b /home/pi/TRB/package-lock.json') == 'JSON data')
+            {
+                ctx.reply('HEY its JSON')
+            }
+
+        /*function fileValidation(filePah){
             var allowedExtensions = /(\.torrent)$/i;
-            if(!allowedExtensions.exec(filePath)){
-                alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
-                fileInput.value = '';
-                return false;
+            if(allowedExtensions.exec(filePath)){ 
     }}*/
 
         })
     }
 }
 
-module.exports = download
+module.exports = download 
