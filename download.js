@@ -36,7 +36,7 @@ const download = (ctx) => {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!').then(() => { //If it is successful, reply 'Downloaded!'
-            var stdout = 'NO'
+            
                 const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
                     stdout.replace(/\n/g, '')
                     stdout.replace(/\t/g, '')
