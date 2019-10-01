@@ -35,20 +35,16 @@ const download = (ctx) => {
     else {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
-            ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
-            const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/package-lock.json', { silent: true }, {async:true})
-            stdout.replace(/\n/g, '')
-            stdout.replace(/\t/g, '')
-            stdout.replace(/\r/g, '')
-            if(stdout == ("JSON data" + '\n')){
-                ctx.reply("Hey, ITS JSON")
-            }
-
-        /*function fileValidation(filePah){
-            var allowedExtensions = /(\.torrent)$/i;
-            if(allowedExtensions.exec(filePath)){ 
-    }}*/
-
+            ctx.reply('Downloaded!').then(()=>{ //If it is successful, reply 'Downloaded!'
+                const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/package-lock.json', { silent: true }, {async:true})
+                stdout.replace(/\n/g, '')
+                stdout.replace(/\t/g, '')
+                stdout.replace(/\r/g, '')
+                if(stdout == ("BitTorrent file" + '\n')){
+                    ctx.reply("Torrent File detected.")
+                    ctx.reply("Starting Transmission")
+                }
+            })            
         })
     }
 }
