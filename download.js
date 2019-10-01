@@ -37,7 +37,9 @@ const download = (ctx) => {
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!')            //If it is successful, reply 'Downloaded!'
             const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/package-lock.json', { silent: true }, {async:true})
-            ctx.reply(stdout);
+            if(stdout == 'JSON data'){
+                ctx.reply('HEY, ITS JSON')
+            }
 
         /*function fileValidation(filePah){
             var allowedExtensions = /(\.torrent)$/i;
