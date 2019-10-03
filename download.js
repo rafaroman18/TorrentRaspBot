@@ -28,7 +28,7 @@ async function DWNLD(url) { // Function to make a GET on any url
 }
 
 
-async function SendToTRRNT(stdout){
+async function SendToTRRNT(stdout,ctx){
     if (stdout == ("BitTorrent file" + '\n')) {
         ctx.reply("Torrent File detected. Starting Transmission")
     }
@@ -48,7 +48,7 @@ const download = (ctx) => {
                     stdout.replace(/\n/g, '')
                     stdout.replace(/\t/g, '')
                     stdout.replace(/\r/g, '')
-                    SendToTRRNT(stdout)                    
+                    SendToTRRNT(stdout,ctx)                    
             })
         })
     }
