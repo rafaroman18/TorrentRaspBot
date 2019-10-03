@@ -27,26 +27,28 @@ async function DWNLD(url) { // Function to make a GET on any url
     })
 }
 
-async function SendToTRRNT(stdout, ctx) {
-    if (stdout == ("BitTorrent file" + '\n')) {
-        ctx.reply("Torrent File detected. Starting Transmission")
-    }
-}
+async function SendToTRRNT(stdout,ctx){
+if (stdout == ("BitTorrent file" + '\n')) {
+    ctx.reply("Torrent File detected. Starting Transmission")
+}}
 
 
-async function download(ctx) {
+async function download(ctx)
+{
     if (ctx.command.args.length != 1) {
         ctx.reply('ERROR in arguments. Please introduce 1 and only 1 link')
     }
     else {
         ctx.reply('Downloading...')
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
-            ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
-            const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
-            stdout.replace(/\n/g, '')
-            stdout.replace(/\t/g, '')
-            stdout.replace(/\r/g, '')
-            SendToTRRNT(stdout, ctx)
+            ctx.reply('Downloaded!').then(() => { //If it is successful, reply 'Downloaded!'
+
+                const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
+                    stdout.replace(/\n/g, '')
+                    stdout.replace(/\t/g, '')
+                    stdout.replace(/\r/g, '')
+                    SendToTRRNT(stdout,ctx)
+                })
         })
     }
 }
