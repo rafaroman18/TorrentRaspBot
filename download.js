@@ -28,14 +28,13 @@ async function DWNLD(url) { // Function to make a GET on any url
 }
 
 
-async function SendToTRRNT(stdout,ctx){
-    if (stdout == ("BitTorrent file" + '\n')) {
-        ctx.reply("Torrent File detected. Starting Transmission")
-    }
+function download(ctx)
+{
+    ctx.reply('IT WORKS!')
 }
 
 
-const download = (ctx) => {
+/*const download = (ctx) => {
     if (ctx.command.args.length != 1) {
         ctx.reply('ERROR in arguments. Please introduce 1 and only 1 link')
     }
@@ -48,10 +47,12 @@ const download = (ctx) => {
                     stdout.replace(/\n/g, '')
                     stdout.replace(/\t/g, '')
                     stdout.replace(/\r/g, '')
-                    SendToTRRNT(stdout,ctx)                    
-            })
+                    if (stdout == ("BitTorrent file" + '\n')) {
+                        ctx.reply("Torrent File detected. Starting Transmission")
+                    }
+                })
         })
     }
-}
+}*/
 
 module.exports = download
