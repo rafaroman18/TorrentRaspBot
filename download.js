@@ -8,23 +8,22 @@ const shell = require('shelljs')
 async function DWNLD(url) { // Function to make a GET on any url
 
     const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', 'file') //Path  //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  
+    const writer = Fs.createWriteStream(path)
 
-    const response = Axios({
+    const response = await Axios({
         method: 'GET',
         url: url,
         responseType: 'stream'
-    }).then(function (response) {
-        response.data.pipe(Fs.createWriteStream(path))
+    })
 
-        return new Promise((resolve, reject) => { //Promise (async object)
+    response.data.pipe(writer)
 
-            response.data.on('end', () => {
-                resolve()
-
-            })
-        })
+    return new Promise((resolve, reject) => { //Promise (async object)
+        writer.on('finish',resolve)
+        writer.on('error',reject)
     })
 }
+
 
 
 async function GetTheFileType(ctx) {
@@ -57,9 +56,9 @@ async function download(ctx) {
             ctx.reply('Downloading...')
             await DWNLD(ctx.command.args[0]) //We call the function
             var filetype = await GetTheFileType(ctx) //We see the type of file
-            ctx.reply('El tipo de archivo es' + filetype)
+            ctx.reply('El tipo de archivo es ' + filetype)
         }
-    } catch(error){
+    } catch (error) {
         console.log(error)
         ctx.reply('An error has ocurred')
     }
