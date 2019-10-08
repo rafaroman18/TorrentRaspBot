@@ -43,7 +43,8 @@ async function download(ctx) {
             const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
             stdout.replace(/\n/g, '')
             stdout.replace(/\t/g, '')
-            stdout.replace(/\r/g, '').then(() => SendToTRRNT(stdout, ctx) )
+            stdout.replace(/\r/g, '') 
+            SendToTRRNT(stdout, ctx)
         })
     }
 }
