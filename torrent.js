@@ -1,14 +1,14 @@
 var shell = require('shelljs')
 
-async function torrent(ctx) {
-    ctx.reply('Starting Download...')
-    shell.exec('sudo bash script_Torrent.sh',{async:true},(code,stdout,stderr) =>{
-        if (code == "0") {
-            ctx.reply('Downloaded.')
-        }
-        ctx.reply('Uploading the file to Google Drive...')
-        shell.exec('sudo bash script_Drive.sh')
-    })
+async function torrent(ctx,name) {
+    try{
+
+        //const { stdout, stderr, code } = await shell.exec('transmission-remote -a ', { silent: true }, { async: true })
+
+    }catch(error){
+        console.log(error)
+        ctx.reply('An error has ocurred starting Transmission.')
+    }
 }
 
 module.exports = torrent
