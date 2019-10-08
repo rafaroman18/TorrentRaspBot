@@ -5,10 +5,9 @@ const Axios = require('axios');
 const shell = require('shelljs')
 
 
-
 async function DWNLD(url) { // Function to make a GET on any url
 
-    const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', 'file')   //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  //PATH
+    const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', 'file') //Path  //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  
 
     const response = Axios({
         method: 'GET',
@@ -33,7 +32,6 @@ async function SendToTRRNT(stdout, ctx) {
     }
 }
 
-
 async function download(ctx) {
     if (ctx.command.args.length != 1) {
         ctx.reply('ERROR in arguments. Please introduce 1 and only 1 link')
@@ -45,8 +43,7 @@ async function download(ctx) {
             const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
             stdout.replace(/\n/g, '')
             stdout.replace(/\t/g, '')
-            stdout.replace(/\r/g, '')
-            SendToTRRNT(stdout, ctx)
+            stdout.replace(/\r/g, '').then(() => SendToTRRNT(stdout, ctx) )
         })
     }
 }
