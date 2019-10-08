@@ -5,10 +5,30 @@ const Axios = require('axios');
 const shell = require('shelljs')
 
 
-async function DWNLD(url) { // Function to make a GET on any url
+async function download(ctx) {
+    try {
+        if (ctx.command.args.length != 2) {
+            ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
+        }
+        else {
+            ctx.reply('Downloading...')
+            await DWNLD(ctx.command.args[0],ctx.command.args[1],ctx) //We call the function
+            ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
+            var filetype = await GetTheFileType(ctx) //We see the type of file
+            await SendToTRRNT(filetype, ctx)
+        }
+    } catch (error) {
+        console.log(error)
+        ctx.reply('An error has ocurred. Try again later...')
+    }
+}
+
+
+
+async function DWNLD(url,name,ctx) { // Function to make a GET on any url
 
     try {
-        const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', 'file') //Path  //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  
+        const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', name) //Path  //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  
         const writer = Fs.createWriteStream(path)
 
         const response = await Axios({
@@ -65,24 +85,6 @@ async function SendToTRRNT(stdout, ctx) {
 
     }
     catch (error) {
-        console.log(error)
-        ctx.reply('An error has ocurred. Try again later...')
-    }
-}
-
-async function download(ctx) {
-    try {
-        if (ctx.command.args.length != 1) {
-            ctx.reply('ERROR in arguments. Please introduce 1 and only 1 link')
-        }
-        else {
-            ctx.reply('Downloading...')
-            await DWNLD(ctx.command.args[0]) //We call the function
-            ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
-            var filetype = await GetTheFileType(ctx) //We see the type of file
-            SendToTRRNT(filetype, ctx)
-        }
-    } catch (error) {
         console.log(error)
         ctx.reply('An error has ocurred. Try again later...')
     }
