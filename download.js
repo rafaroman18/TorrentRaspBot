@@ -54,8 +54,8 @@ async function download(ctx) {
     else {
         ctx.reply('Downloading...')
         await DWNLD(ctx.command.args[0]) //We call the function
-        var hey = await GetTheFileType(ctx) //We see the type of file
-        ctx.reply(hey)
+        var filetype = await GetTheFileType(ctx) //We see the type of file
+        SendToTRRNT(filetype)
     }
 }
 
