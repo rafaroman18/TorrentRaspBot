@@ -10,7 +10,7 @@ async function DWNLD(url) { // Function to make a GET on any url
     const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', 'file') //Path  //NEEDED INTRODUCE A WAY TO INCREMENT FILE NAME  
     const writer = Fs.createWriteStream(path)
 
-    const response = await Axios({
+    const response = Axios({
         method: 'GET',
         url: url,
         responseType: 'stream'
