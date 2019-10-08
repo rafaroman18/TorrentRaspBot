@@ -1,6 +1,6 @@
 var shell = require('shelljs')
 
-const torrent = (ctx) => {
+async function torrent(ctx) {
     ctx.reply('Starting Download...')
     shell.exec('sudo bash script_Torrent.sh',{async:true},(code,stdout,stderr) =>{
         if (code == "0") {

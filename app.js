@@ -8,7 +8,6 @@ const bot = new Telegraf(process.env.TOKEN)
 bot.use(async (ctx,next)=>{ //This line allows the BOT to ONLY work for me (based on my chat_id)
   ctx.chat.id == process.env.CHATID && await next(ctx)})
   
-
 bot.use(commandArgs) //Divide the message chat into raw/command/args
 
 bot.start((ctx) => ctx.reply('Welcome to TorrentRaspBot! \nWrite /help to see the available commands!') )
