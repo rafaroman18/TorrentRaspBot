@@ -41,6 +41,8 @@ async function download(ctx) {
         DWNLD(ctx.command.args[0]).then(() => { //We call the function
             ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
             const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
+            ctx.reply(stdout)
+            ctx.reply(stderr)
             stdout.replace(/\n/g, '')
             stdout.replace(/\t/g, '')
             stdout.replace(/\r/g, '') 
