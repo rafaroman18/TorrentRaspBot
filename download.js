@@ -19,8 +19,8 @@ async function DWNLD(url) { // Function to make a GET on any url
     response.data.pipe(writer)
 
     return new Promise((resolve, reject) => { //Promise (async object)
-        writer.on('finish',resolve)
-        writer.on('error',reject)
+        writer.on('finish', resolve)
+        writer.on('error', reject)
     })
 }
 
@@ -53,7 +53,7 @@ async function download(ctx) {
             await DWNLD(ctx.command.args[0]) //We call the function
             ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
             var filetype = await GetTheFileType(ctx) //We see the type of file
-            SendToTRRNT(filetype)    
+            SendToTRRNT(filetype,ctx)
         }
     } catch (error) {
         console.log(error)
