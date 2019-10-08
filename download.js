@@ -28,7 +28,6 @@ async function DWNLD(url) { // Function to make a GET on any url
 
 async function GetTheFileType(ctx) {
 
-    ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
     const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
     stdout.replace(/\n/g, '')
     stdout.replace(/\t/g, '')
@@ -55,6 +54,7 @@ async function download(ctx) {
         else {
             ctx.reply('Downloading...')
             await DWNLD(ctx.command.args[0]) //We call the function
+            ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
             var filetype = await GetTheFileType(ctx) //We see the type of file
             ctx.reply('El tipo de archivo es ' + filetype)
         }
