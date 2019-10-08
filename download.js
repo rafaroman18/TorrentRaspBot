@@ -27,16 +27,17 @@ async function DWNLD(url) { // Function to make a GET on any url
 }
 
 
-async function GetTheFileType(ctx){
+async function GetTheFileType(ctx) {
+
     ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
-    const { stdout, stderr, code } = shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
+    const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/file', { silent: true }, { async: true })
     stdout.replace(/\n/g, '')
     stdout.replace(/\t/g, '')
-    stdout.replace(/\r/g, '') 
-    
+    stdout.replace(/\r/g, '')
+
     return new Promise((resolve, reject) => { //Promise (async object)
 
-            resolve(stdout)
+        resolve(stdout)
 
     })
 }
@@ -48,14 +49,19 @@ async function SendToTRRNT(stdout, ctx) {
 }
 
 async function download(ctx) {
-    if (ctx.command.args.length != 1) {
-        ctx.reply('ERROR in arguments. Please introduce 1 and only 1 link')
-    }
-    else {
-        ctx.reply('Downloading...')
-        await DWNLD(ctx.command.args[0]) //We call the function
-        var filetype = await GetTheFileType(ctx) //We see the type of file
-        SendToTRRNT(filetype,ctx)
+    try {
+        if (ctx.command.args.length != 1) {
+            ctx.reply('ERROR in arguments. Please introduce 1 and only 1 link')
+        }
+        else {
+            ctx.reply('Downloading...')
+            await DWNLD(ctx.command.args[0]) //We call the function
+            var filetype = await GetTheFileType(ctx) //We see the type of file
+            ctx.reply('El tipo de archivo es' + filetype)
+        }
+    } catch(error){
+        console.log(error)
+        ctx.reply('An error has ocurred')
     }
 }
 
