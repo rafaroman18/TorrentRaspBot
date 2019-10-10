@@ -1,4 +1,5 @@
 const torrent = require('./torrent')
+const drive = require('./drive')
 const Fs = require('fs');
 const Path = require('path');
 const Axios = require('axios');
@@ -18,7 +19,10 @@ async function download(ctx) {
             await DWNLD(url,name,ctx) //We call the function
             ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
             var filetype = await GetTheFileType(ctx,name) //We see the type of file
-            await SendToTRRNT(filetype, ctx,name)
+            var prom = await SendToTRRNT(filetype, ctx,name)
+            if(prom == 0){
+                await drive(ctx,name)
+            }
         }
     } catch (error) {
         console.log(error)
@@ -59,9 +63,7 @@ async function GetTheFileType(ctx,name) {
         const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/'+name, { silent: true }, { async: true })
 
         return new Promise((resolve, reject) => { //Promise (async object)
-
             resolve(stdout)
-
         })
     }
     catch (error) {
