@@ -1,4 +1,4 @@
-const torrent = require('./torrent')
+/*const torrent = require('./torrent')
 const Fs = require('fs');
 const Path = require('path');
 const Axios = require('axios');
@@ -53,4 +53,4 @@ async function download(ctx)
     }
 }
 
-module.exports = download
+module.exports = download*/

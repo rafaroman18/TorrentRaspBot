@@ -77,7 +77,6 @@ async function SendToTRRNT(stdout, ctx, name) {
         var prom;
         if (stdout == ("BitTorrent file" + '\n')) {
             prom = 1;
-            ctx.reply("Torrent File detected. Starting Transmission")
             await torrent(ctx,name)
         }else{
             prom = 0;
