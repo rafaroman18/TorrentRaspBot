@@ -15,9 +15,9 @@ async function download(ctx) {
             var url = ctx.command.args[0]
             var name = ctx.command.args[1]
 
-            ctx.reply('Downloading...')
+            await ctx.reply('Downloading...')
             await DWNLD(url,name,ctx) //We call the function
-            ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
+            await ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
             var filetype = await GetTheFileType(ctx,name) //We see the type of file
             var prom = await SendToTRRNT(filetype, ctx,name)
             if(prom == 1){
