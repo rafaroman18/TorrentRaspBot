@@ -1,9 +1,9 @@
 var shell = require('shelljs')
 
 async function torrent(ctx,name) {
-    ctx.reply("Torrent File detected. Starting Transmission")
+    await ctx.reply("Torrent File detected. Starting Transmission")
     try{
-        ctx.reply('You have reached torrent function. Congrats!')
+        await ctx.reply('You have reached torrent function. Congrats!')
         //const { stdout, stderr, code } = await shell.exec('transmission-remote -a ', { silent: true }, { async: true })
 
     }catch(error){
