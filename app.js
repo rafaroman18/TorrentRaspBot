@@ -1,6 +1,7 @@
 const Telegraf = require('telegraf')
 const commandArgs = require('./arguments')
 const download = require('./download')
+const shell = require('shelljs')
 require('dotenv').config()
 
 const bot = new Telegraf(process.env.TOKEN)
