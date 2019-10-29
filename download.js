@@ -19,7 +19,7 @@ async function download(ctx) {
             await DWNLD(url,name,ctx) //We call the function
             await ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
             var filetype = await GetTheFileType(ctx,name) //We see the type of file
-            var prom = await SendToTRRNT(filetype, ctx,name)
+            var prom = await SendToTRRNT(filetype,ctx,name)
             if(prom == 1){
                 await drive(ctx,name)
             }
@@ -88,9 +88,8 @@ async function SendToTRRNT(stdout, ctx, name) {
         return new Promise((resolve,reject) => {
             resolve(prom)
         })
-
-
     }
+
     catch (error) {
         console.log(error)
         ctx.reply('An error has ocurred. Try again later...')
