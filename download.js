@@ -73,12 +73,12 @@ async function GetTheFileType(ctx,name) {
     }
 }
 
-async function SendToTRRNT(stdout, ctx, name) {
+async function SendToTRRNT(out, ctx, name) {
     try {
         var prom;
         //prom == 1 -> Not Torrent File
         //prom == 0 -> Torrent File
-        if (stdout == ("BitTorrent file" + '\n')) {
+        if (out == ("BitTorrent file" + '\n')) {
             prom = 0;
             await torrent(ctx,name)
         }else{
