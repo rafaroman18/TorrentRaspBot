@@ -26,7 +26,7 @@ async function download(ctx) {
         }
     } catch (error) {
         console.log(error)
-        ctx.reply('An error has ocurred. Try again later...')
+        ctx.reply('An error has ocurred during the download...')
     }
 }
 
@@ -92,7 +92,7 @@ async function SendToTRRNT(stdout, ctx, name) {
 
     catch (error) {
         console.log(error)
-        ctx.reply('An error has ocurred. Try again later...')
+        ctx.reply('An error has ocurred sending the Torrent...')
     }
 }
 
