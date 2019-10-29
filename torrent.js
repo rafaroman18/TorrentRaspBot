@@ -1,8 +1,8 @@
 var shell = require('shelljs')
 
 async function torrent(ctx,name) {
-    await ctx.reply("Torrent File detected. Starting Transmission")
     try{
+        await ctx.reply("Torrent File detected. Starting Transmission")
         const { stdout, stderr, code } = await shell.exec('transmission-remote -n \'transmission:transmission\' -a /tempDownload/'+name, { silent: true }, { async: true })
         await ctx.reply('Torrent file added.')
 
