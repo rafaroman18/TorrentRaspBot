@@ -31,7 +31,7 @@ bot.launch()
 async function UP(ctx) {
   const { stdout, stderr, code } = await shell.exec('transmission-remote -n \'transmission:transmission\' -t 1 -f', { silent: true }, { async: true })
   if (stdout == '') {
-    await ctx.reply('The torrent has finished already or maybe no torrent has been started. + '\n' + stdout)
+    await ctx.reply('The torrent has finished already or maybe no torrent has been started.')
   }
   else {
     await ctx.reply('The actual status of the torrent is' + '\n' + stdout)
