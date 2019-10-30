@@ -24,11 +24,11 @@ bot.start((ctx) => ctx.reply('Welcome to TorrentRaspBot! \nWrite /help to see th
 bot.help((ctx) => ctx.reply('These are the available commands:\n/download "url file" "name file" -> Downloads the file and automatically uploads it to Google Drive\n/author -> Shows the author and some info of him'))
 bot.command('author', (ctx) => ctx.reply('Author: Rafael Roman \nGithub: github.com/rafaroman18 \n2019'))
 bot.command('download', download)
-bot.command('update', update)
+bot.command('update', update(ctx))
 
 bot.launch()
 
 async function update(ctx) {
   const { stdout, stderr, code } = await shell.exec('transmission-remote -n \'transmission:transmission\' -t 1 -f', { silent: true }, { async: true })
-  await ctx.reply(stdout + '')
+  await ctx.reply(' ' + stdout)
 }
