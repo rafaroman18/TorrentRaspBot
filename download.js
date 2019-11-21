@@ -1,9 +1,10 @@
 const torrent = require('./torrent')
 const drive = require('./drive')
-const Fs = require('fs');
-const Path = require('path');
-const Axios = require('axios');
+const Fs = require('fs')
+const Path = require('path')
+const Axios = require('axios')
 const shell = require('shelljs')
+const web = require('webtorr')
 
 
 async function download(ctx) {
