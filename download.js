@@ -20,6 +20,9 @@ async function download(ctx) {
             await ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
             var filetype = await GetTheFileType(ctx,name) //We see the type of file
             var prom = await SendToTRRNT(filetype,ctx,name)
+            
+            //prom == 0 -> Torrent
+            //prom == 1 -> Another Type of File
             if(prom == 1){
                 await drive(ctx,name)
             }
