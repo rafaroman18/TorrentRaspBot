@@ -37,20 +37,23 @@ async function download(ctx) {
 
 
 async function DWNLD(url,name,ctx) { // Function to make a GET on any url
+    await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
+    
     if(url.substr(0,7)=='magnet:'){
         await ctx.reply('Magnet Link detected. Sending to Webtorrent.')
+        
         var client = new WebTorrent()
 
-        client.add(url,function(torrent) {
-            var file = torrent.files.find(function(file){
-                return file.name
-           })
+        client.add(url,{path:'./tempDownload'},function(torrent) {
+            torrent.on('done',function () {
+                console.log('Torrent '+torrent.name+ ' finished.')
+                ctx.reply('Torrent '+torrent.name+ ' finished.')
+            })
         })
     }
     else{
     try {
-        await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
-        const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', name) //Path  
+        const path = Path.resolve(__dirname, './tempDownload', name) //Path  
         const writer = Fs.createWriteStream(path)
 
         const response = await Axios({
