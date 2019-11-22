@@ -25,7 +25,7 @@ async function download(ctx) {
             
             //prom == 1 -> Torrent
             //prom == 0 -> Another Type of File
-            if (prom == 0) {
+            if (filetype == 0) {
                 if (ctx.command.args.length != 2) {
                     ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
                 } else {
