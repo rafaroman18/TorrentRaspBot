@@ -38,8 +38,16 @@ async function download(ctx) {
 
 async function DWNLD(url,name,ctx) { // Function to make a GET on any url
     if(url.substr(0,7)=='magnet:'){
-        ctx.reply('Magnet Link detected. Sending to Webtorrent.')
+        await ctx.reply('Magnet Link detected. Sending to Webtorrent.')
+        var client = new WebTorrent()
+
+        client.add(url,function(torrent) {
+            var file = torrent.files.find(function(file){
+                return file.name
+           })
+        })
     }
+    else{
     try {
         await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
         const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', name) //Path  
@@ -60,7 +68,7 @@ async function DWNLD(url,name,ctx) { // Function to make a GET on any url
     } catch (error) {
         console.log(error)
         ctx.reply('An error has ocurred during downloading. See if the url it\'s correct.')
-    }
+    }}
 }
 
 
