@@ -15,17 +15,16 @@ async function download(ctx) {
 
         await ctx.reply('Downloading...')
         var magnet = await DWNLD(url, name, ctx) //We call the function
+
         //In DWNLD we check if it is a magnet link. If it is, then it downloads (magnet==1)
         //If not, then we will download the file of the url (magnet==0)
         if (magnet == 0) {
 
-            //After that, we will check the file and see if it is a .torrent
+            //After that, we will check the file and see if it is a ".torrent"
             var filetype = await GetTheFileType(ctx, name) //We see the type of file
-            var prom = await SendToTRRNT(filetype, ctx, name)
             
             //prom == 1 -> Torrent
             //prom == 0 -> Another Type of File
-
             if (prom == 0) {
                 if (ctx.command.args.length != 2) {
                     ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
@@ -63,7 +62,7 @@ async function DWNLD(url, name, ctx) {
             })
         }
         else {
-            magnet = 0
+            magnet = 0 
             const path = Path.resolve(__dirname, './tempDownload', name) //Path  
             const writer = Fs.createWriteStream(path)
 
@@ -95,14 +94,14 @@ async function DWNLD(url, name, ctx) {
 async function GetTheFileType(ctx, name) {
     try {
         const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/' + name, { silent: true }, { async: true })
-        var prom = 0;
+        var prom = 1;
         
-        //prom == 1 -> Not Torrent File
-        //prom == 0 -> Torrent File
+        //prom == 1 -> Torrent File
+        //prom == 0 -> Another Type File
         if (stdout == ("BitTorrent file" + '\n')) {
             await torrent(ctx, name)
         } else {
-            prom = 1;
+            prom = 0;
         }
 
         return new Promise((resolve, reject) => {
