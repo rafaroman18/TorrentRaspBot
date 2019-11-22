@@ -13,6 +13,13 @@ async function download(ctx) {
         var url = ctx.command.args[0]
         var name = ctx.command.args[1]
 
+        //Here we will request a name for the url that are not magnet links
+        /*if (url.substr(0, 7) != 'magnet:'){
+            var name
+            await ctx.reply('Detected a non-magnet link.'+ '\n' + 'Introduce a name for the file to Download')
+            
+        }*/
+ 
         await ctx.reply('Downloading...')
         var magnet = await DWNLD(url, name, ctx) //We call the function
 
@@ -28,6 +35,7 @@ async function download(ctx) {
             if (filetype == 0) {
                 if (ctx.command.args.length != 2) {
                     ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
+                    throw error
                 } else {
                     await drive(ctx, name)
                 }
