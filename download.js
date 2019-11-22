@@ -4,7 +4,7 @@ const Fs = require('fs')
 const Path = require('path')
 const Axios = require('axios')
 const shell = require('shelljs')
-const web = require('webtorr')
+const web = require('webtorrent')
 
 
 async function download(ctx) {
