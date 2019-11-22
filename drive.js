@@ -9,8 +9,8 @@ async function drive(ctx,name){
             ctx.reply('An error has ocurred uploading the file to Google Drive.')
             reject()
         }else{
-            await ctx.reply('Uploaded to Google Drive successfuly.')
-            await ctx.reply('File save as '+name)
+            ctx.reply('Uploaded to Google Drive successfuly.')
+            ctx.reply('File save as '+name)
             resolve()
         }
     })

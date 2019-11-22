@@ -3,6 +3,7 @@ const Fs = require('fs')
 const Path = require('path')
 const Axios = require('axios')
 const shell = require('shelljs')
+const torrent = require('./torrent')
 var WebTorrent = require('webtorrent')
 
 

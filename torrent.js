@@ -1,4 +1,6 @@
+const drive = require('./drive')
 var WebTorrent = require('webtorrent')
+
 
 async function torrent(ctx, url) {
     try {
@@ -22,4 +24,4 @@ async function torrent(ctx, url) {
     }
 }
 
-export default torrent
+module.exports = torrent
