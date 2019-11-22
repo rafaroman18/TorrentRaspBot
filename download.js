@@ -30,10 +30,12 @@ async function download(ctx) {
             //After that, we will check the file and see if it is a ".torrent"
             var filetype = await GetTheFileType(ctx, name) //We see the type of file
             
-            //prom == 1 -> Torrent
-            //prom == 0 -> Another Type of File
+            //filetype == 1 -> Torrent
+            //filetype == 0 -> Another Type of File
             if (filetype == 0) {
                 if (ctx.command.args.length != 2) {
+                    
+                    await shell.exec('rm -r ./tempDownload', { silent: true }, { async: true })
                     ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
                     throw error
                 } else {
