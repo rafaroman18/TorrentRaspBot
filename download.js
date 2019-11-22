@@ -24,9 +24,9 @@ async function download(ctx) {
             
             //prom == 0 -> Torrent
             //prom == 1 -> Another Type of File
-            if(prom == 1){
+            /*if(prom == 1){
                 await drive(ctx,name)
-            }
+            }*/
         }
     } catch (error) {
         console.log(error)
