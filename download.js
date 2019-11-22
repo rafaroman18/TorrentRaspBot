@@ -39,9 +39,12 @@ async function download(ctx) {
                     ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
                     throw error
                 } else {
-                    await drive(ctx, name)
+                    
                 }
             }
+
+            //Then we uploado the file to Drive
+            await drive(ctx, name)
         }
     } catch (error) {
         console.log(error)
