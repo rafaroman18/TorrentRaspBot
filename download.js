@@ -39,7 +39,7 @@ async function download(ctx) {
 async function DWNLD(url,name,ctx) { // Function to make a GET on any url
     if(url.substr(0,7)=='magnet:'){
         await ctx.reply('Magnet Link detected. Sending to Webtorrent.')
-        var client = new WebTorrent()
+        var client = new web()
 
         client.add(url,function(torrent) {
             var file = torrent.files.find(function(file){
