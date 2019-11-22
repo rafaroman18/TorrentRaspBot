@@ -37,7 +37,9 @@ async function download(ctx) {
 
 
 async function DWNLD(url,name,ctx) { // Function to make a GET on any url
-
+    if(url.substr(0,7)=='magnet:'){
+        ctx.reply('Magnet Link detected. Sending to Webtorrent.')
+    }
     try {
         await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
         const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', name) //Path  
