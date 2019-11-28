@@ -7,12 +7,16 @@ async function torrent(ctx, url) {
         var client = new WebTorrent()
 
         client.add(url, { path: './tempDownload' }, function (torrent) {
-
+        for(const TOR in client.torrents)
+        {
+            ctx.reply(TOR.size + '\n')
+        }
             return new Promise((resolve, reject) => {
                 torrent.on('done', function () {
                     console.log('Torrent ' + torrent.name + ' finished.')
                     ctx.reply('Torrent ' + torrent.name + ' finished.')
                     drive(ctx, torrent.name)
+                    
                     resolve
                 })
                 torrent.on('error', reject)

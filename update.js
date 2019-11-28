@@ -1,14 +1,14 @@
-import Webtorrent from 'webtorrent';
+var Webtorrent = require('webtorrent');
 
 async function update(ctx) {
-   try{
-        var client = Webtorrent()
-        var torrents = clients.torrents[...]
-   }
-   catch(error){
-        console.log(error)
-        ctx.reply('An error ocurred during taking the update.')
-   }
-  }
+     
+     try {
+          ctx.reply("Update of all Torrents")
+     }
+     catch (error) {
+          console.log(error)
+          ctx.reply('An error ocurred during taking the update.')
+     }
+}
 
 module.exports = update
