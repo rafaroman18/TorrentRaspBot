@@ -1,12 +1,13 @@
 const drive = require('./drive')
 var WebTorrent = require('webtorrent')
-
+const update = require('./update')
 
 async function torrent(ctx, url) {
     try {
         var client = new WebTorrent()
 
         client.add(url, { path: './tempDownload' }, function (torrent) {
+        update.updateClient(client);
         for(const TOR in client.torrents)
         {
             ctx.reply(TOR.size + '\n')

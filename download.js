@@ -64,7 +64,7 @@ async function download(ctx) {
 async function DWNLD(url, name, ctx) {
     await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
     var magnet = 1
-    try {
+    try { //It is magnet link
         if (url.substr(0, 7) == 'magnet:') {
             await ctx.reply('Magnet Link detected. Sending to Webtorrent.')
             await ctx.reply('Starting the Torrent.')
@@ -76,7 +76,7 @@ async function DWNLD(url, name, ctx) {
                 resolve(magnet)
             })
         }
-        else {
+        else { //It is not
             magnet = 0
             const path = Path.resolve(__dirname, './tempDownload', name) //Path  
             const writer = Fs.createWriteStream(path)
@@ -105,7 +105,7 @@ async function DWNLD(url, name, ctx) {
 
 
 
-//This function will return 
+//This function will return the type of file
 async function GetTheFileType(ctx, name) {
     try {
         const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/' + name, { silent: true }, { async: true })
