@@ -13,13 +13,6 @@ async function download(ctx) {
         var url = ctx.command.args[0]
         var name = ctx.command.args[1]
 
-        //Here we will request a name for the url that are not magnet links
-        /*if (url.substr(0, 7) != 'magnet:'){
-            var name
-            await ctx.reply('Detected a non-magnet link.'+ '\n' + 'Introduce a name for the file to Download')
-            
-        }*/
-
         await ctx.reply('Downloading...')
         var magnet = await DWNLD(url, name, ctx) //We call the function
 
@@ -33,16 +26,10 @@ async function download(ctx) {
             //filetype == 1 -> Torrent
             //filetype == 0 -> Another Type of File
             if (filetype == 0) {
-                if (ctx.command.args.length != 2) {
 
-                    await shell.exec('rm -r ./tempDownload', { silent: true }, { async: true })
-                    ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
-                    throw error
+                //Then we uploado the file to Drive
+                await drive(ctx, name)
 
-                } else {
-                    //Then we uploado the file to Drive
-                    await drive(ctx, name)
-                }
             }
             else {
 
@@ -63,39 +50,58 @@ async function download(ctx) {
 // Function to make a GET on any url
 async function DWNLD(url, name, ctx) {
     await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
+
     var magnet = 1
+
     try { //It is magnet link
+
         if (url.substr(0, 7) == 'magnet:') {
             await ctx.reply('Magnet Link detected. Sending to Webtorrent.')
             await ctx.reply('Starting the Torrent.')
 
             //Then we call the WebTorrent Function
-            await torrent(ctx,url)
+            await torrent(ctx, url)
 
             return new Promise((resolve, reject) => { //Promise (async object)
                 resolve(magnet)
             })
         }
         else { //It is not
-            magnet = 0
-            const path = Path.resolve(__dirname, './tempDownload', name) //Path  
-            const writer = Fs.createWriteStream(path)
 
-            const response = await Axios({
-                method: 'GET',
-                url: url,
-                responseType: 'stream'
-            })
+            //If there are more arguments or the name hasnt been introduced, 
+            //we tell the user to write the message again
+            if (ctx.command.args.length != 2 || name == null) {
 
-            response.data.pipe(writer)
+                await shell.exec('rm -r ./tempDownload', { silent: true }, { async: true })
+                await ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
 
-            await ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
+            } else {
 
-            return new Promise((resolve, reject) => { //Promise (async object)
-                writer.on('finish', resolve(magnet))
-                writer.on('error', reject)
-            })
+                magnet = 0
+                const path = Path.resolve(__dirname, './tempDownload', name) //Path  
+                const writer = Fs.createWriteStream(path)
+
+                const response = await Axios({
+                    method: 'GET',
+                    url: url,
+                    responseType: 'stream'
+                })
+
+                response.data.pipe(writer)
+
+                await ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
+
+                //Then We return the Promise
+                return new Promise((resolve, reject) => { //Promise (async object)
+                    writer.on('finish', resolve(magnet))
+                    writer.on('error', reject)
+                })
+            }
+
         }
+
+
+
     }
     catch (error) {
         console.log(error)
