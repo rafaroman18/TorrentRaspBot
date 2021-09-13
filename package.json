@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/rafaroman18/TorrentRaspBot#readme",
   "dependencies": {
-    "axios": "^0.21.2",
+    "axios": "^0.21.4",
     "dotenv": "^8.2.0",
     "path": "^0.12.7",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.4",
     "telegraf": "^3.37.0",
     "webtorrent": "^0.107.17"
   }

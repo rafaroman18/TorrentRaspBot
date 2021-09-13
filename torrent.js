@@ -1,17 +1,33 @@
-var shell = require('shelljs')
+const drive = require('./drive')
+var WebTorrent = require('webtorrent')
+const update = require('./update')
 
-async function torrent(ctx,name) {
-    try{
-        await ctx.reply("Torrent File detected. Starting Transmission...")
-        await shell.exec('transmission-remote -n \'transmission:transmission\' -a /tempDownload/'+ name, { silent: true }, { async: true })
-        await ctx.reply('Torrent file added.')
+async function torrent(ctx, url) {
+    try {
+        var client = new WebTorrent()
 
-        await ctx.reply('Starting ' + name + ' torrent.')
-        await shell.exec('transmission-remote -n \'transmission:transmission\' -t 1 -s', { silent: true }, { async: true })
+        client.add(url, { path: './tempDownload' }, function (torrent) {
 
-    }catch(error){
+            return new Promise((resolve, reject) => {
+                torrent.on('done', function () {
+                    console.log('Torrent ' + torrent.name + ' finished.')
+                    ctx.reply('Torrent ' + torrent.name + ' finished.')
+                    drive(ctx, torrent.name)
+
+                    resolve
+                })
+                torrent.on('error', reject)
+            })
+        })
+
+        for(const currentTorrent in client.torrents)
+        {
+            ctx.reply('Torrent ' + currentTorrent.name + '. Time Remaining: ' + currentTorrent.timeRemaining + '. Download Speed: ' + currentTorrent.downloadSpeed + '. Upload Speed: ' + currentTorrent.uploadSpeed + '\n');
+        }
+
+    } catch (error) {
         console.log(error)
-        ctx.reply('An error has ocurred starting Transmission.')
+        await ctx.reply('An error has ocurred during downloading the Torrent. See if the torrent is still up and it\'s correct.')
     }
 }
 
