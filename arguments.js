@@ -1,7 +1,7 @@
 const commandArgs = (ctx, next) => {
     if (ctx.updateType === 'message' && ctx.update.message.text !== undefined) {
       const text = ctx.update.message.text
-      if (text.startsWith('/')) {
+      //if (text.startsWith('/')) {
         const match = text.match(/^\/([^\s]+)\s?(.+)?/)
         let args = [] 
         let command
@@ -19,7 +19,7 @@ const commandArgs = (ctx, next) => {
           args,
         }
         console.log(ctx.command)
-      }
+      //}
     }
     return next()
   }

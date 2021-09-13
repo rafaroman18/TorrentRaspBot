@@ -1,27 +1,43 @@
-const torrent = require('./torrent')
 const drive = require('./drive')
-const Fs = require('fs');
-const Path = require('path');
-const Axios = require('axios');
+const Fs = require('fs')
+const Path = require('path')
+const Axios = require('axios')
 const shell = require('shelljs')
+const torrent = require('./torrent')
+var WebTorrent = require('webtorrent')
 
 
 async function download(ctx) {
     try {
-        if (ctx.command.args.length != 2) {
-            ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
-        }
-        else {
-            var url = ctx.command.args[0]
-            var name = ctx.command.args[1]
 
-            await ctx.reply('Downloading...')
-            await DWNLD(url,name,ctx) //We call the function
-            await ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
-            var filetype = await GetTheFileType(ctx,name) //We see the type of file
-            var prom = await SendToTRRNT(filetype,ctx,name)
-            if(prom == 1){
-                await drive(ctx,name)
+        var url = ctx.command.args[0]
+        var name = ctx.command.args[1]
+
+        await ctx.reply('Downloading...')
+        var magnet = await DWNLD(url, name, ctx) //We call the function
+
+        //In DWNLD we check if it is a magnet link. If it is, then it downloads (magnet==1)
+        //If not, then we will download the file of the url (magnet==0)
+        if (magnet == 0) {
+
+            //After that, we will check the file and see if it is a ".torrent"
+            var filetype = await GetTheFileType(ctx, name) //We see the type of file
+
+            //filetype == 1 -> Torrent
+            //filetype == 0 -> Another Type of File
+            if (filetype == 0) {
+
+                //Then we uploado the file to Drive
+                await drive(ctx, name)
+
+            }
+            else {
+
+                await ctx.reply('Torrrent File Detected. Sending to Webtorrent.')
+
+                //We call the webtorrent function to put the Torrent File to Download
+                //After the download, it calls to Drive function
+                await torrent(ctx, './tempDownload/' + name)
             }
         }
     } catch (error) {
@@ -31,67 +47,91 @@ async function download(ctx) {
 }
 
 
+// Function to make a GET on any url
+async function DWNLD(url, name, ctx) {
+    await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
 
-async function DWNLD(url,name,ctx) { // Function to make a GET on any url
+    var magnet = 1
 
-    try {
-        await shell.exec('mkdir -p tempDownload', { silent: true }, { async: true }) //We create the folder 'tempDownload' if it doesnt exits yet
-        const path = Path.resolve(__dirname, '/home/pi/TRB/tempDownload', name) //Path  
-        const writer = Fs.createWriteStream(path)
+    try { //It is magnet link
 
-        const response = await Axios({
-            method: 'GET',
-            url: url,
-            responseType: 'stream'
-        })
+        if (url.substr(0, 7) == 'magnet:') {
+            await ctx.reply('Magnet Link detected. Sending to Webtorrent.')
+            await ctx.reply('Starting the Torrent.')
 
-        response.data.pipe(writer)
+            //Then we call the WebTorrent Function
+            await torrent(ctx, url)
 
-        return new Promise((resolve, reject) => { //Promise (async object)
-            writer.on('finish', resolve)
-            writer.on('error', reject)
-        })
-    } catch (error) {
+            return new Promise((resolve, reject) => { //Promise (async object)
+                resolve(magnet)
+            })
+        }
+        else { //It is not
+
+            //If there are more arguments or the name hasnt been introduced, 
+            //we tell the user to write the message again
+            if (ctx.command.args.length != 2 || name == null) {
+
+                await shell.exec('rm -r ./tempDownload', { silent: true }, { async: true })
+                await ctx.reply('ERROR in arguments. Please introduce 2 and only 2 arguments: url and name')
+
+            } else {
+
+                magnet = 0
+                const path = Path.resolve(__dirname, './tempDownload', name) //Path  
+                const writer = Fs.createWriteStream(path)
+
+                const response = await Axios({
+                    method: 'GET',
+                    url: url,
+                    responseType: 'stream'
+                })
+
+                response.data.pipe(writer)
+
+                await ctx.reply('Downloaded!') //If it is successful, reply 'Downloaded!'
+
+                //Then We return the Promise
+                return new Promise((resolve, reject) => { //Promise (async object)
+                    writer.on('finish', resolve(magnet))
+                    writer.on('error', reject)
+                })
+            }
+
+        }
+
+
+
+    }
+    catch (error) {
         console.log(error)
-        ctx.reply('An error has ocurred during downloading. See if the url it\'s correct.')
+        await ctx.reply('An error has ocurred during downloading. See if the url it\'s correct.')
     }
 }
 
 
 
-async function GetTheFileType(ctx,name) {
+//This function will return the type of file
+async function GetTheFileType(ctx, name) {
     try {
-        const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/'+name, { silent: true }, { async: true })
+        const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/' + name, { silent: true }, { async: true })
+        var prom;
 
-        return new Promise((resolve, reject) => { //Promise (async object)
-            resolve(stdout)
+        //prom == 1 -> Torrent File
+        //prom == 0 -> Another Type File
+        if (stdout == ("BitTorrent file" + '\n')) {
+            prom = 1;
+        } else {
+            prom = 0;
+        }
+
+        return new Promise((resolve, reject) => {
+            resolve(prom)
         })
     }
     catch (error) {
         console.log(error)
         ctx.reply('An error has ocurred during detecting file type')
-    }
-}
-
-async function SendToTRRNT(stdout, ctx, name) {
-    try {
-        var prom = 0;
-        //prom == 1 -> Not Torrent File
-        //prom == 0 -> Torrent File
-        if (stdout == ("BitTorrent file" + '\n')) {
-            await torrent(ctx,name)
-        }else{
-            prom = 1;
-        }
-
-        return new Promise((resolve,reject) => {
-            resolve(prom)
-        })
-    }
-
-    catch (error) {
-        console.log(error)
-        ctx.reply('An error has ocurred sending the Torrent...')
     }
 }
 
