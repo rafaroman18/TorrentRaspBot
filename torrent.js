@@ -7,7 +7,7 @@ async function torrent(ctx, url) {
         var client = new WebTorrent()
 
         client.add(url, { path: './tempDownload' }, function (torrent) {
-
+	    
             return new Promise((resolve, reject) => {
                 torrent.on('done', function () {
                     console.log('Torrent ' + torrent.name + ' finished.')
