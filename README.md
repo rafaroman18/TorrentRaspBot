@@ -10,8 +10,10 @@ Telegram BOT capable of managing downloads and Torrent Files and auto uploading 
 
 ## **Introduction**
 
-
 ## **Instructions**
+
+### **Upload to Drive**
+rclone/drive
 
 ## **Use**
 
