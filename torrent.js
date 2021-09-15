@@ -1,6 +1,4 @@
 const drive = require('./drive')
-/*var WebTorrent = require('webtorrent')*/
-/*var client = require('./app')*/
 const update = require('./update')
 
 async function torrent(ctx, url) {
