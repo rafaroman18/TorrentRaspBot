@@ -17,7 +17,7 @@ async function torrent(ctx, url) {
                     drive(ctx, torrent.name)
 
 		    //Once the torrent has been downloaded, we remove it from the array of torrents
-		    global.client.splice(global.client.torrents.indexOf(torrent),1)
+		    global.client.torrents.splice(global.client.torrents.indexOf(torrent),1)
 
                     resolve
                 })
