@@ -1,31 +1,29 @@
 const drive = require('./drive')
-/*var WebTorrent = require('webtorrent')*/
-/*var client = require('./app')*/
+var WebTorrent = require('webtorrent')
 const update = require('./update')
 
 async function torrent(ctx, url) {
     try {
-        global.client.add(url, { path: './tempDownload' }, function (torrent) {
+        var client = new WebTorrent()
+
+        client.add(url, { path: './tempDownload' }, function (torrent) {
 	    
             return new Promise((resolve, reject) => {
-
                 torrent.on('done', function () {
-
-		    //We tell the user that the torrent is finished
-		    console.log('Torrent ' + torrent.name + ' finished.')
+                    console.log('Torrent ' + cl + ' finished.')
                     ctx.reply('Torrent ' + torrent.name + ' finished.')
-
-		    //Then we upload it to Drive
                     drive(ctx, torrent.name)
-
-		    //Once the torrent has been downloaded, we remove it from the array of torrents
-		    global.client.splice(global.client.torrents.indexOf(torrent),1)
 
                     resolve
                 })
                 torrent.on('error', reject)
             })
         })
+
+        for(const currentTorrent in client.torrents)
+        {
+            ctx.reply('Torrent ' + currentTorrent.name + '. Time Remaining: ' + currentTorrent.timeRemaining + '. Download Speed: ' + currentTorrent.downloadSpeed + '. Upload Speed: ' + currentTorrent.uploadSpeed + '\n');
+        }
 
     } catch (error) {
         console.log(error)

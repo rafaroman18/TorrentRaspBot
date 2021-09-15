@@ -5,6 +5,10 @@ const shell = require('shelljs')
 const update = require('./update')
 require('dotenv').config()
 
+var WebTorrent = require('webtorrent')
+var client_ = new WebTorrent()
+global.client = client_;
+
 const bot = new Telegraf(process.env.TOKEN)
 
 bot.use(async (ctx, next) => { //This line allows the BOT to ONLY work for me (based on my chat_id)

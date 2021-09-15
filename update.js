@@ -1,20 +1,11 @@
-var WebTorrent = require('webtorrent')
 
-var client;
-
-function updateClient(currentClient) {client = currentClient}
 
 async function update(ctx) {
      try {
-          var allTorrents = client.torrents;
-          
-               allTorrents.every((currentTorrent)=> {
-                    ctx.reply('Torrent ' + currentTorrent.name + '. Time Remaining: ' + currentTorrent.timeRemaining + '. Download Speed: ' + currentTorrent.downloadSpeed + '. Upload Speed: ' + currentTorrent.uploadSpeed);
-               });
-
-          /*return new Promise((resolve, reject) => {
-               
-           })*/
+               global.client.torrents.every((currentTorrent)=> {
+                    ctx.reply('Torrent ' + currentTorrent.name + '. Progress: ' + Math.trunc(currentTorrent.progress*100)  + '%. Time Remaining: ' + currentTorrent.timeRemaining + '. Download Speed: ' + currentTorrent.downloadSpeed + '. Upload Speed: ' + currentTorrent.uploadSpeed);('Torrent ' + currentTorrent.name + '. Time Remaining: ' + currentTorrent.timeRemaining + '. Download Speed: ' + currentTorrent.downloadSpeed + '. Upload Speed: ' + currentTorrent.uploadSpeed);
+		    console.log('Torrent ' + currentTorrent.name + '. Progress: ' + Math.trunc(currentTorrent.progress*100)  + '%. Time Remaining: ' + currentTorrent.timeRemaining + '. Download Speed: ' + currentTorrent.downloadSpeed + '. Upload Speed: ' + currentTorrent.uploadSpeed);           
+	});
      }
      catch (error) {
           console.log(error)
