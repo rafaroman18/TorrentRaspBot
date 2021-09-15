@@ -15,6 +15,6 @@ Telegram BOT capable of managing downloads and Torrent Files and auto uploading 
 
 ## **Use**
 
-# LICENSE 
+### LICENSE 
 
-## MIT License - Copyright (c) 2021 [Rafa Román](https://github.com/rafaroman18)
+ MIT License - Copyright (c) 2021 [Rafa Román](https://github.com/rafaroman18)
