@@ -12,7 +12,7 @@ The idea is that we can download things even if we are outside and dont want to 
 
 This is accomplished by placing a Raspberry PI in our house and running the code of this project. 
 
-## **Use**
+## **Behaviour**
 
 Our BOT will receive the link, download the file and then:
 
