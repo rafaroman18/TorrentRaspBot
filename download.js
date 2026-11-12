@@ -114,7 +114,7 @@ async function DWNLD(url, name, ctx) {
 //This function will return the type of file
 async function GetTheFileType(ctx, name) {
     try {
-        const { stdout, stderr, code } = await shell.exec('file -b /home/pi/TRB/tempDownload/' + name, { silent: true }, { async: true })
+        const { stdout, stderr, code } = await shell.exec('file -b "' + Path.resolve(__dirname, 'tempDownload', name) + '"', { silent: true }, { async: true })
         var prom;
 
         //prom == 1 -> Torrent File
